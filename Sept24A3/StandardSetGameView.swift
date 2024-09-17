@@ -11,27 +11,14 @@ struct StandardSetGameView: View {
     var game: StandardSetGame
     
     var body: some View {
-        AspectVGrid(game.setGame.cards, aspectRatio: 2/3) { card in
+        AspectVGrid(game.model.deck, aspectRatio: 2/3) { card in
             CardView(card: card)
         }
         
     }
 }
 
-struct CardView: View {
-    let card: SetGame.Card
-    
-    var body: some View {
-        ZStack {
-            
-            RoundedRectangle(cornerRadius: 20)
-                .stroke()
-            Text(card.description)
-                .foregroundStyle(.black)
-        }
-        
-    }
-}
+
 
 #Preview {
     StandardSetGameView(game: StandardSetGame())

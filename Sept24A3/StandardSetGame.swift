@@ -2,17 +2,20 @@
 //  StandardSetGame.swift
 //  Sept24A3
 //
-//  Created by Vanya Mutafchieva on 11/09/2024.
+//  Created by Vanya Mutafchieva on 13/09/2024.
 //
 
 import SwiftUI
 
 class StandardSetGame {
     
-    private(set) var setGame = createSetGame()
+    private(set) var model = createSetGame()
     
     private static func createSetGame() -> SetGame {
-       SetGame()
+        SetGame { numShapes, shape, shading, color in
+            CardContent(numOfShapes: numShapes, shading: shading, color: color, shape: shape)
+        }
+        
     }
+    
 }
-
