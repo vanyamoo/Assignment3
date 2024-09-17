@@ -5,13 +5,20 @@
 //  Created by Vanya Mutafchieva on 13/09/2024.
 //
 
-import Foundation
+import SwiftUI
 
-struct CardContent {
+struct CardContent: Identifiable, Hashable, CustomStringConvertible {
     let numOfShapes: Int
     let shading: CardShading
     let color: CardColor
     let shape: CardShape
+    
+    var description: String {
+        "\(numOfShapes) \(shading) \(color) \(shape)"
+    }
+    var id: String {
+        "\(numOfShapes) \(shading) \(color) \(shape)"
+    }
 }
 
 // Enums for Card Attributes

@@ -11,14 +11,11 @@ struct StandardSetGameView: View {
     var game: StandardSetGame
     
     var body: some View {
-        AspectVGrid(game.model.deck, aspectRatio: 2/3) { card in
+        AspectVGrid(game.cards, aspectRatio: 2/3) { card in
             CardView(card: card)
         }
-        
     }
 }
-
-
 
 #Preview {
     StandardSetGameView(game: StandardSetGame())

@@ -9,63 +9,58 @@ import SwiftUI
 
 struct CardView: View {
     
-    //typealias Card = SetGameOld.Card
-    
     let card: Card
-    let cardShapes = [1, 2, 3]
     
     var body: some View {
         ZStack {
-            let shape = Capsule()
-            //let shape = Rectangle()
-            //let shape = Diamond()
-            //    .stroke()
-                .strokeBorder()
-                .opacity(0.5)
-                .foregroundStyle(.red)
-                .aspectRatio(2/1, contentMode: .fit)
+            
             RoundedRectangle(cornerRadius: 20)
                 .stroke()
+            RoundedRectangle(cornerRadius: 20)
+                .fill().foregroundStyle(.white)
             VStack {
-                ForEach(cardShapes, id: \.self) { cardShape in
-                    shape
+                ForEach(0..<card.content.numOfShapes, id: \.self) { _ in
+                    shape()
+                        .foregroundStyle(card.content.color.applyColor())
+                        .aspectRatio(2/1, contentMode: .fit)
                 }
-                //.padding(.vertical)
             }
             .padding(.horizontal)
-                
-//            Text(card.description)
-//                .foregroundStyle(.black)
         }
         
     }
     
     @ViewBuilder
-    private func symbol(_ shape: String, shading: String, color: Color) -> some View {
-        if shape == "diamond" {
-            Diamond()
-        } else if shape == "rectangle" {
-            Rectangle()
-        } else if shape == "capsule" {
-            Capsule()
-        }
-        
-    }
-    
-    @ViewBuilder
-    private func applyShading(_ shading: String, to shape: some Shape) -> some View {
-        if shading == "open" {
-            shape.stroke()
-        } else if shading == "shaded" {
-            shape.opacity(0.6)
-        } else if shading == "solid" {
+    private func shape() -> some View {
+        switch card.content.shape {
+        case .diamond:
+            applyShading(to: Diamond())
+        case .rectangle:
+            applyShading(to: Rectangle())
+        case .capsule:
+            applyShading(to: Capsule())
             
+        }
+    }
+    
+    @ViewBuilder
+    func applyShading(to shape: some Shape) -> some View {
+        switch card.content.shading {
+        case .open:
+            shape.stroke()
+        case .solid:
+            shape.fill()
+        case .shaded:
+            ZStack {
+                shape.stroke()
+                shape.fill().opacity(0.2)
+            }
         }
     }
 }
 
 #Preview {
-    let card = Card(content: CardContent(numOfShapes: 3, shading: CardShading.open, color: CardColor.green, shape: CardShape.capsule), id: 4)
+    let card = Card(content: CardContent(numOfShapes: 3, shading: CardShading.shaded, color: CardColor.green, shape: CardShape.capsule), id: 4)
     return CardView(card: card)
         .padding()
 }
