@@ -28,17 +28,12 @@ struct SetGame {
 }
 
 struct Card: Identifiable, CustomStringConvertible {
-//        let numOfShapes: Int
-//        let shading: CardShading
-//        let color: CardColor
-//        let shape: CardShape
     let content: CardContent
     
     var isMatched = false
     let id: Int
     
         var description: String {
-//            "\(id): \(numOfShapes) \(shading) \(color) \(shape) \(isMatched ? " matched" : "")"
             "\(id): \(content) \(isMatched ? " matched" : "")"
         }
 }
