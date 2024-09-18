@@ -20,6 +20,7 @@
 		4EB02D1D2C91D50100D04669 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB02D1C2C91D50100D04669 /* AspectVGrid.swift */; };
 		4EB02D1F2C91D55400D04669 /* SetGameOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB02D1E2C91D55400D04669 /* SetGameOld.swift */; };
 		4EB02D212C91DD9700D04669 /* StandardSetGameOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB02D202C91DD9700D04669 /* StandardSetGameOld.swift */; };
+		4ECAB6992C9AD63300E32BCE /* Squiggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAB6982C9AD63300E32BCE /* Squiggle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		4EB02D1C2C91D50100D04669 /* AspectVGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 		4EB02D1E2C91D55400D04669 /* SetGameOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameOld.swift; sourceTree = "<group>"; };
 		4EB02D202C91DD9700D04669 /* StandardSetGameOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardSetGameOld.swift; sourceTree = "<group>"; };
+		4ECAB6982C9AD63300E32BCE /* Squiggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squiggle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				4E5437032C9346A800545C7B /* CardView.swift */,
 				4EB02D1C2C91D50100D04669 /* AspectVGrid.swift */,
 				4E5437052C94364D00545C7B /* Diamond.swift */,
+				4ECAB6982C9AD63300E32BCE /* Squiggle.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				4EB02D212C91DD9700D04669 /* StandardSetGameOld.swift in Sources */,
 				4E54370A2C945AA800545C7B /* StandardSetGame.swift in Sources */,
 				4E5437082C94552A00545C7B /* SetGame.swift in Sources */,
+				4ECAB6992C9AD63300E32BCE /* Squiggle.swift in Sources */,
 				4E5437062C94364E00545C7B /* Diamond.swift in Sources */,
 				4EB02D0F2C91C8F400D04669 /* Sept24A3App.swift in Sources */,
 				4E54370F2C94985E00545C7B /* SetCard.swift in Sources */,

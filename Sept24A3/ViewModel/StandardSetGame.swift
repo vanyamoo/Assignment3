@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-class StandardSetGame {
+@Observable class StandardSetGame {
     
     var cards: [Card] {
-        setGame.deck
+        setGame.cardsInPlay
     }
     
     private(set) var setGame = createSetGame()
@@ -19,6 +19,20 @@ class StandardSetGame {
         SetGame { numShapes, shape, shading, color in
             CardContent(numOfShapes: numShapes, shading: shading, color: color, shape: shape)
         }
+    }
+    
+// MARK: - Intents
+    
+    private func deal3MoreCards() {
+        
+    }
+    
+    private func newGame() {
+        
+    }
+    
+    func select(_ card: Card) {
+        setGame.select(card)
     }
     
 }

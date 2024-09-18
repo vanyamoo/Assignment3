@@ -13,25 +13,22 @@ struct CardView: View {
     
     var body: some View {
         ZStack {
-            
-            RoundedRectangle(cornerRadius: 20)
-                .stroke()
-            RoundedRectangle(cornerRadius: 20)
-                .fill().foregroundStyle(.white)
+            let base = RoundedRectangle(cornerRadius: 20)
+            base.stroke()
+            base.fill().foregroundStyle(.white)
             VStack {
                 ForEach(0..<card.content.numOfShapes, id: \.self) { _ in
-                    shape()
+                    drawShape()
                         .foregroundStyle(card.content.color.applyColor())
                         .aspectRatio(2/1, contentMode: .fit)
                 }
             }
             .padding(.horizontal)
         }
-        
     }
     
     @ViewBuilder
-    private func shape() -> some View {
+    private func drawShape() -> some View {
         switch card.content.shape {
         case .diamond:
             applyShading(to: Diamond())
