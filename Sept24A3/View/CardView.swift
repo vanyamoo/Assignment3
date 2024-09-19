@@ -15,7 +15,7 @@ struct CardView: View {
         ZStack {
             let base = RoundedRectangle(cornerRadius: 20)
             base.stroke()
-            base.fill().foregroundStyle(.white)
+            base.fill().foregroundStyle(cardColor)
             VStack {
                 ForEach(0..<card.content.numOfShapes, id: \.self) { _ in
                     drawShape()
@@ -24,6 +24,17 @@ struct CardView: View {
                 }
             }
             .padding(.horizontal)
+        }
+    }
+    
+    var cardColor: Color {
+        switch card.isMatched {
+        case .none:
+                .white
+        case .yes:
+                .yellow
+        case .no:
+                .gray
         }
     }
     

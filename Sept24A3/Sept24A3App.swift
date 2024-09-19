@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct Sept24A3App: App {
-    var game = StandardSetGame()
+    @State private var game = StandardSetGame()
     var body: some Scene {
         WindowGroup {
             StandardSetGameView(game: game)

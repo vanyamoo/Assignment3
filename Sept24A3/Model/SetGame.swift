@@ -14,12 +14,73 @@ struct SetGame {
     private(set) var cardsInPlay = [Card]()
     
     mutating func select(_ card: Card) {
-        if selectedCards.contains(card) {
-            selectedCards.remove(card)
-        } else {
-            selectedCards.append(card)
+        if card.isMatched == .yes {
+            return
         }
+        // 1. take action after a (matched/mismatched) Set
+        if selectedCards.count == 3 {
+            // 1. deselect non-matching cards or replace matching cards with new ones from the deck
+            
+            selectedCards.forEach { selectedCard in
+                
+                if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
+                    
+                    if cardsMakeASet(selectedCards) { // (if cards are a match)
+                        // deal 3 more cards in the place of the matched Set
+                        if !deck.isEmpty {
+                            
+                            cardsInPlay[cardIndex] = deck.removeFirst()
+                        } else {
+                            cardsInPlay.remove(at: cardIndex)
+                        }
+                        
+                    } else { // else if cards are a mismatch
+                        
+                        cardsInPlay[cardIndex].isMatched = .none
+                    }
+                }
+            }
+            
+            // empty the selection
+            selectedCards.removeAll()
+        }
+        
+        // 2. building a new selection
+        if selectedCards.count < 3 {
+            
+            // selecting/ deselecting
+            if selectedCards.contains(card) {
+                selectedCards.remove(card)
+            } else {
+                selectedCards.append(card)
+                
+                // marking a match/mismatch
+                if selectedCards.count == 3 {
+                    
+                    selectedCards.forEach { selectedCard in
+                        if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
+                            
+                            // evaluating a selection
+                            if cardsMakeASet(selectedCards) { // (cards are a match)
+                                
+                                // mark cards as matched
+                                cardsInPlay[cardIndex].isMatched = .yes
+                            } else { // cards are a mismatch
+                                cardsInPlay[cardIndex].isMatched = .no
+                            }
+                        }
+                    }
+                    
+                    
+                }
+            }
+        } 
+
         print("selectedCards \(selectedCards)")
+    }
+    
+    private func cardsMakeASet(_ cards: [Card]) -> Bool {
+        true
     }
     
     private func deal3MoreCards() {
@@ -51,12 +112,18 @@ struct SetGame {
 struct Card: Identifiable, Equatable, CustomStringConvertible {
     let content: CardContent
     
-    var isMatched = false
+    var isMatched: Matched = .none
     let id: Int
     
     var description: String {
-        "\(id): \(content) \(isMatched ? " matched" : "")"
+        "\(id): \(content), isMatched(\(isMatched))"
     }
+}
+
+enum Matched: Equatable {
+    case none
+    case yes
+    case no
 }
 
 extension Array where Element: Identifiable {

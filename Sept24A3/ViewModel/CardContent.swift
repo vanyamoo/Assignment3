@@ -14,10 +14,10 @@ struct CardContent: Identifiable, Hashable, CustomStringConvertible {
     let shape: CardShape
     
     var description: String {
-        "\(numOfShapes) \(shading) \(color) \(shape)"
+        "\(numOfShapes) \(shading) \(color) \(shape)\(numOfShapes == 1 ? "" : "s")"
     }
     var id: String {
-        "\(numOfShapes) \(shading) \(color) \(shape)"
+        "\(numOfShapes) \(shading) \(color) \(shape)\(numOfShapes == 1 ? "" : "s")"
     }
 }
 
