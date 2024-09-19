@@ -9,78 +9,85 @@ import Foundation
 
 struct SetGame {
     private(set) var deck: [Card]
+    
+    /// The Array of cards currently selected by the user. Max 3 cards
     private(set) var selectedCards = [Card]()
     
+    /// The Array of cards currently in play (displayed on screen)
     private(set) var cardsInPlay = [Card]()
     
+    /// Selects/deselects the card and plays a rounf of the game
     mutating func select(_ card: Card) {
-        if card.isMatched == .yes {
-            return
-        }
-        // 1. take action after a (matched/mismatched) Set
+        
+        // 0. do nothing if user selects a matched card
+        if card.isMatched == .yes { return }
+        
+        // 1. if we have a (matched/mismatched) Set of 3 cards already
         if selectedCards.count == 3 {
-            // 1. deselect non-matching cards or replace matching cards with new ones from the deck
-            
-            selectedCards.forEach { selectedCard in
-                
-                if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
-                    
-                    if cardsMakeASet(selectedCards) { // (if cards are a match)
-                        // deal 3 more cards in the place of the matched Set
-                        if !deck.isEmpty {
-                            
-                            cardsInPlay[cardIndex] = deck.removeFirst()
-                        } else {
-                            cardsInPlay.remove(at: cardIndex)
-                        }
-                        
-                    } else { // else if cards are a mismatch
-                        
-                        cardsInPlay[cardIndex].isMatched = .none
-                    }
-                }
+            if isASet() { // if matched
+                replaceSet()
+            } else { // mismatched
+                deselectSelection()
             }
-            
-            // empty the selection
             selectedCards.removeAll()
         }
         
-        // 2. building a new selection
+        // 2.
         if selectedCards.count < 3 {
-            
-            // selecting/ deselecting
-            if selectedCards.contains(card) {
-                selectedCards.remove(card)
-            } else {
-                selectedCards.append(card)
-                
-                // marking a match/mismatch
-                if selectedCards.count == 3 {
-                    
-                    selectedCards.forEach { selectedCard in
-                        if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
-                            
-                            // evaluating a selection
-                            if cardsMakeASet(selectedCards) { // (cards are a match)
-                                
-                                // mark cards as matched
-                                cardsInPlay[cardIndex].isMatched = .yes
-                            } else { // cards are a mismatch
-                                cardsInPlay[cardIndex].isMatched = .no
-                            }
-                        }
-                    }
-                    
-                    
-                }
+            selectDeselectCard(card)
+            if selectedCards.count == 3 {
+                markCardsAsMatchedOrMismatched()
             }
-        } 
+        }
 
         print("selectedCards \(selectedCards)")
     }
     
-    private func cardsMakeASet(_ cards: [Card]) -> Bool {
+    private mutating func selectDeselectCard(_ card: Card) {
+        if selectedCards.contains(card) {
+            selectedCards.remove(card)
+        } else {
+            selectedCards.append(card)
+        }
+    }
+    
+    
+    private mutating func markCardsAsMatchedOrMismatched() {
+        selectedCards.forEach { selectedCard in
+            if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
+                if isASet() { // (cards are a match)
+                    cardsInPlay[cardIndex].isMatched = .yes
+                } else { // cards are a mismatch
+                    cardsInPlay[cardIndex].isMatched = .no
+                }
+            }
+        }
+    }
+    
+    private func isASet() -> Bool {
         true
+    }
+    
+    /// Deselects the currently selected cards.
+    private mutating func deselectSelection() {
+        selectedCards.forEach { selectedCard in
+            if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
+                cardsInPlay[cardIndex].isMatched = .none
+            }
+        }
+    }
+    
+    /// Removes the matched cards from the cards currently in play. Replaces them with a new set of card from the deck, if deck is not empty.
+    private mutating func replaceSet() {
+        selectedCards.forEach { selectedCard in
+            if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
+                if !deck.isEmpty {
+                    cardsInPlay[cardIndex] = deck.removeFirst()
+                } else {
+                    cardsInPlay.remove(at: cardIndex)
+                }
+            }
+        }
     }
     
     private func deal3MoreCards() {
@@ -89,7 +96,7 @@ struct SetGame {
     
     init(cardContentFactory: (Int, CardShape, CardShading, CardColor) -> CardContent) {
         // create the deck
-        deck = [Card]()
+        deck = []
         for number in 1...3 {
             for shape in CardShape.allCases {
                 for shading in CardShading.allCases {
