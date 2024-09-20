@@ -29,7 +29,7 @@ struct CardView: View {
     
     var cardColor: Color {
         switch card.isMatched {
-        case .none:
+        case .notyet:
                 .white
         case .yes:
                 .yellow
