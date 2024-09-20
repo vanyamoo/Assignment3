@@ -23,7 +23,7 @@ struct StandardSetGameView: View {
     }
     
     private func isSelected(_ card: Card) -> Bool {
-        game.setGame.selectedCards.contains(card)
+        card.isIn(game.setGame.selectedCards) 
     }
 }
 

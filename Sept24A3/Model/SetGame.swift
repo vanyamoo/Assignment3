@@ -16,46 +16,52 @@ struct SetGame {
     /// The Array of cards currently in play (displayed on screen)
     private(set) var cardsInPlay = [Card]()
     
+    private var a3CardSet: Bool { selectedCards.count == 3 }
+    
     /// Selects/deselects the card and plays a rounf of the game
     mutating func select(_ card: Card) {
-        
-        // 0. do nothing if user selects a matched card
+        // do nothing if user selects a matched card
         if card.isMatched == .yes { return }
         
-        // 1. if we have a (matched/mismatched) Set of 3 cards already
-        if selectedCards.count == 3 {
-            if isASet() { // if matched
-                replaceSet()
-            } else { // mismatched
-                deselectSelection()
-            }
-            selectedCards.removeAll()
+        // if 3 cards already selected
+        if a3CardSet {
+            clearSet()
         }
-        
-        // 2.
+        // if less than 3 cards selected
         if selectedCards.count < 3 {
-            selectDeselectCard(card)
-            if selectedCards.count == 3 {
-                markCardsAsMatchedOrMismatched()
+            selectDeselect(card)
+            if a3CardSet {
+                updateMatchedOrMismatchedStatus()
             }
         }
 
         print("selectedCards \(selectedCards)")
     }
     
-    private mutating func selectDeselectCard(_ card: Card) {
-        if selectedCards.contains(card) {
+    private mutating func clearSet() {
+        if isAMatchedSet() { // matched
+            replaceSet()
+        } else { // mismatched
+            deselectSelection()
+        }
+    }
+    
+    private mutating func selectDeselect(_ card: Card) {
+        // if card already selected, deselect it
+        if card.isIn(selectedCards) {
             selectedCards.remove(card)
-        } else {
+        }
+        //else add it to selection
+        else {
             selectedCards.append(card)
         }
     }
     
     
-    private mutating func markCardsAsMatchedOrMismatched() {
+    private mutating func updateMatchedOrMismatchedStatus() {
         selectedCards.forEach { selectedCard in
             if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
-                if isASet() { // (cards are a match)
+                if isAMatchedSet() { // (cards are a match)
                     cardsInPlay[cardIndex].isMatched = .yes
                 } else { // cards are a mismatch
                     cardsInPlay[cardIndex].isMatched = .no
@@ -64,7 +70,7 @@ struct SetGame {
         }
     }
     
-    private func isASet() -> Bool {
+    private func isAMatchedSet() -> Bool {
         true
     }
     
@@ -75,6 +81,7 @@ struct SetGame {
                 cardsInPlay[cardIndex].isMatched = .none
             }
         }
+        selectedCards.removeAll()
     }
     
     /// Removes the matched cards from the cards currently in play. Replaces them with a new set of card from the deck, if deck is not empty.
@@ -88,6 +95,7 @@ struct SetGame {
                 }
             }
         }
+        selectedCards.removeAll()
     }
     
     private func deal3MoreCards() {
@@ -136,5 +144,11 @@ enum Matched: Equatable {
 extension Array where Element: Identifiable {
     mutating func remove(_ element: Element) {
         self.removeAll(where: { $0.id == element.id } )
+    }
+}
+
+extension Card {
+    func isIn(_ cards: [Card]) -> Bool {
+        cards.contains(where: {$0.id == id})
     }
 }

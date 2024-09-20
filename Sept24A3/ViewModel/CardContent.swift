@@ -22,16 +22,16 @@ struct CardContent: Identifiable, Hashable, CustomStringConvertible {
 }
 
 // Enums for Card Attributes
-enum CardColor: CaseIterable {
-    case red, green, purple
+enum CardColor: Int, CaseIterable {
+    case red = 1, green, purple
 }
 
-enum CardShape: CaseIterable  {
-    case diamond, rectangle, capsule
+enum CardShape: Int, CaseIterable  {
+    case diamond = 1, rectangle, capsule
 }
 
-enum CardShading: CaseIterable  {
-    case solid, shaded, open
+enum CardShading: Int, CaseIterable  {
+    case solid = 1, shaded, open
 }
 
 
