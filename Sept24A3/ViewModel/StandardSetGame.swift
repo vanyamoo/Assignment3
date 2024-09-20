@@ -28,7 +28,7 @@ import SwiftUI
     }
     
     func newGame() {
-        
+        setGame = StandardSetGame.createSetGame()
     }
     
     func select(_ card: Card) {

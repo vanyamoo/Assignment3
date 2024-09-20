@@ -23,7 +23,7 @@ struct StandardSetGameView: View {
             }
             
             HStack {
-                Button("New Game", action: { })
+                Button("New Game", action: { game.newGame() })
                 Spacer()
                 Button("Deal 3 More Cards", action: { game.deal3MoreCards() } )
                 .disabled(isDeckEmpty)
