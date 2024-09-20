@@ -13,8 +13,8 @@ struct CardView: View {
     
     var body: some View {
         ZStack {
-            let base = RoundedRectangle(cornerRadius: 20)
-            base.stroke()
+            let base = RoundedRectangle(cornerRadius: 10)
+            base.stroke(lineWidth: 1.5)
             base.fill().foregroundStyle(cardColor)
             VStack {
                 ForEach(0..<card.content.numOfShapes, id: \.self) { _ in
@@ -23,7 +23,7 @@ struct CardView: View {
                         .aspectRatio(2/1, contentMode: .fit)
                 }
             }
-            .padding(.horizontal)
+            .padding(12) // TO DO: 15 for < 42 cards; 8 for > 42 cards
         }
     }
     

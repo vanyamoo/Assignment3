@@ -21,6 +21,12 @@ import SwiftUI
         }
     }
     
+    var isDeckEmpty: Bool { setGame.deck.isEmpty }
+    
+    func isCardSelected(_ card: Card) -> Bool {
+        card.isIn(setGame.selectedCards)
+    }
+    
 // MARK: - Intents
     
     func deal3MoreCards() {

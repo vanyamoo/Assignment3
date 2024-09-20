@@ -12,7 +12,6 @@
 		4E5437082C94552A00545C7B /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5437072C94552A00545C7B /* SetGame.swift */; };
 		4E54370A2C945AA800545C7B /* StandardSetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5437092C945AA800545C7B /* StandardSetGame.swift */; };
 		4E54370C2C948BF200545C7B /* CardContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54370B2C948BF200545C7B /* CardContent.swift */; };
-		4E54370F2C94985E00545C7B /* SetCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54370E2C94985E00545C7B /* SetCard.swift */; };
 		4EB02D0F2C91C8F400D04669 /* Sept24A3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB02D0E2C91C8F400D04669 /* Sept24A3App.swift */; };
 		4EB02D112C91C8F400D04669 /* StandardSetGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB02D102C91C8F400D04669 /* StandardSetGameView.swift */; };
 		4EB02D132C91C8F500D04669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EB02D122C91C8F500D04669 /* Assets.xcassets */; };
@@ -29,7 +28,6 @@
 		4E5437072C94552A00545C7B /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
 		4E5437092C945AA800545C7B /* StandardSetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardSetGame.swift; sourceTree = "<group>"; };
 		4E54370B2C948BF200545C7B /* CardContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContent.swift; sourceTree = "<group>"; };
-		4E54370E2C94985E00545C7B /* SetCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCard.swift; sourceTree = "<group>"; };
 		4EB02D0B2C91C8F400D04669 /* Sept24A3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sept24A3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EB02D0E2C91C8F400D04669 /* Sept24A3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sept24A3App.swift; sourceTree = "<group>"; };
 		4EB02D102C91C8F400D04669 /* StandardSetGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardSetGameView.swift; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 				4E5437122C997BDF00545C7B /* View */,
 				4E5437112C997B8B00545C7B /* ViewModel */,
 				4E5437102C997B7100545C7B /* Model */,
-				4E54370E2C94985E00545C7B /* SetCard.swift */,
 				4E54370D2C94981B00545C7B /* to be removed */,
 				4EB02D122C91C8F500D04669 /* Assets.xcassets */,
 				4EB02D142C91C8F500D04669 /* Preview Content */,
@@ -208,7 +205,6 @@
 				4ECAB6992C9AD63300E32BCE /* Squiggle.swift in Sources */,
 				4E5437062C94364E00545C7B /* Diamond.swift in Sources */,
 				4EB02D0F2C91C8F400D04669 /* Sept24A3App.swift in Sources */,
-				4E54370F2C94985E00545C7B /* SetCard.swift in Sources */,
 				4E5437042C9346A800545C7B /* CardView.swift in Sources */,
 				4EB02D1D2C91D50100D04669 /* AspectVGrid.swift in Sources */,
 			);

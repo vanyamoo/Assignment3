@@ -13,9 +13,11 @@ struct StandardSetGameView: View {
     @State private var isSelected = false
     var body: some View {
         VStack {
+            Spacer()
             AspectVGrid(game.cardsInPlay, aspectRatio: 2/3) { card in
                 CardView(card: card)
-                    .foregroundStyle(isSelected(card) ? .blue : .black)
+                    .foregroundStyle(game.isCardSelected(card) ? .blue : .black)
+                    .padding(4)
                     .onTapGesture {
                         game.select(card)
                         isSelected.toggle()
@@ -26,18 +28,10 @@ struct StandardSetGameView: View {
                 Button("New Game", action: { game.newGame() })
                 Spacer()
                 Button("Deal 3 More Cards", action: { game.deal3MoreCards() } )
-                .disabled(isDeckEmpty)
+                    .disabled(game.isDeckEmpty)
             }
             .padding()
         }
-        
-        
-    }
-    
-    private var isDeckEmpty: Bool { game.setGame.deck.isEmpty }
-    
-    private func isSelected(_ card: Card) -> Bool {
-        card.isIn(game.setGame.selectedCards)
     }
 }
 

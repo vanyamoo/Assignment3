@@ -42,8 +42,6 @@ struct SetGame {
             selectDeselect(card)
             checkIfReadyToBeMatched()
         }
-        
-        print("selectedCards \(selectedCards)")
     }
     
     private mutating func checkIfReadyToBeMatched() {
