@@ -65,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				4E5437072C94552A00545C7B /* SetGame.swift */,
+				4E54370B2C948BF200545C7B /* CardContent.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -73,7 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				4E5437092C945AA800545C7B /* StandardSetGame.swift */,
-				4E54370B2C948BF200545C7B /* CardContent.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

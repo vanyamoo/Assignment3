@@ -19,7 +19,7 @@ struct SetGame {
     //private var a3CardSet: Bool { selectedCards.count == 3 }
     private var selectionIsAMatchedSet: Matched {
         if selectedCards.count == 3 {
-            return isAMatchedSet() ? .yes : .no
+            return aMatch() ? .yes : .no
         }
         else  { // if selectedCards.count < 3
             return .notyet
@@ -70,19 +70,16 @@ struct SetGame {
     private mutating func updateMatchedOrMismatchedStatus() {
         selectedCards.forEach { selectedCard in
             if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
-                if isAMatchedSet() { // (cards are a match)
-                    cardsInPlay[cardIndex].isMatched = .yes
-                } else { // cards are a mismatch
-                    cardsInPlay[cardIndex].isMatched = .no
-                }
+//                if isAMatchedSet() { // (cards are a match)
+//                    cardsInPlay[cardIndex].isMatched = .yes
+//                } else { // cards are a mismatch
+//                    cardsInPlay[cardIndex].isMatched = .no
+//                }
+                cardsInPlay[cardIndex].isMatched = aMatch() ? .yes : .no
             }
         }
     }
-    
-    private func isAMatchedSet() -> Bool {
-        true
-    }
-    
+
     /// Deselects the currently selected cards.
     private mutating func deselectSelection() {
         selectedCards.forEach { selectedCard in
@@ -131,6 +128,20 @@ struct SetGame {
             cardsInPlay.append(deck.remove(at: index))
         }
     }
+    
+    /// Determines whether a card selection makes a Set (as per the Set rules),  i.e. all three cards have matching attributes or all different attributes
+    private func aMatch() -> Bool {
+        guard selectedCards.count == 3 else { return false }
+        let sum = [
+            selectedCards.reduce(0, { result, card in result + card.content.numOfShapes }), // 1 + 1 + 1 = 3
+            selectedCards.reduce(0, { result, card in result + card.content.shading.rawValue }), // 1 + 2 + 3 = 6
+            selectedCards.reduce(0, { result, card in result + card.content.color.rawValue }), // 2 + 2 + 2 = 6
+            selectedCards.reduce(0, { result, card in result + card.content.shape.rawValue })  // 3 + 3 + 3 = 9
+        ]
+        let isAMatch = sum.reduce(true) { partialResult, attributeSum in
+            partialResult && (attributeSum % 3 == 0) } // true && (3 % 3 == 0) && (6 % 3 == 0) && (6 % 3 == 0) && (9 % 3 == 0) = true
+        return isAMatch
+    }
 }
 
 struct Card: Identifiable, Equatable, CustomStringConvertible {
@@ -163,120 +174,3 @@ extension Card {
         cards.contains(where: {$0.id == id})
     }
 }
-
-//struct SetGame {
-//    private(set) var deck: [Card]
-//    
-//    /// The Array of cards currently selected by the user. Max 3 cards
-//    private(set) var selectedCards = [Card]()
-//    
-//    /// The Array of cards currently in play (displayed on screen)
-//    private(set) var cardsInPlay = [Card]()
-//    
-//    private var a3CardSet: Bool { selectedCards.count == 3 }
-//    
-//    /// Selects/deselects the card and plays a round of the game
-//    mutating func select(_ card: Card) {
-//        // do nothing if user selects a matched card
-//        if card.isMatched == .yes { return }
-//        
-//        // if 3 cards already selected
-//        if a3CardSet {
-//            clearSet()
-//        }
-//        // if less than 3 cards selected
-//        if selectedCards.count < 3 {
-//            selectDeselect(card)
-//            if a3CardSet {
-//                updateMatchedOrMismatchedStatus()
-//            }
-//        }
-//
-//        print("selectedCards \(selectedCards)")
-//    }
-//    
-//    private mutating func clearSet() {
-//        if isAMatchedSet() { // matched
-//            replaceSet()
-//        } else { // mismatched
-//            deselectSelection()
-//        }
-//    }
-//    
-//    private mutating func selectDeselect(_ card: Card) {
-//        // if card already selected, deselect it
-//        if card.isIn(selectedCards) {
-//            selectedCards.remove(card)
-//        }
-//        //else add it to selection
-//        else {
-//            selectedCards.append(card)
-//        }
-//    }
-//    
-//    
-//    private mutating func updateMatchedOrMismatchedStatus() {
-//        selectedCards.forEach { selectedCard in
-//            if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
-//                if isAMatchedSet() { // (cards are a match)
-//                    cardsInPlay[cardIndex].isMatched = .yes
-//                } else { // cards are a mismatch
-//                    cardsInPlay[cardIndex].isMatched = .no
-//                }
-//            }
-//        }
-//    }
-//    
-//    private func isAMatchedSet() -> Bool {
-//        true
-//    }
-//    
-//    /// Deselects the currently selected cards.
-//    private mutating func deselectSelection() {
-//        selectedCards.forEach { selectedCard in
-//            if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
-//                cardsInPlay[cardIndex].isMatched = .notyet
-//            }
-//        }
-//        selectedCards.removeAll()
-//    }
-//    
-//    /// Removes the matched cards from the cards currently in play. Replaces them with a new set of card from the deck, if deck is not empty.
-//    private mutating func replaceSet() {
-//        selectedCards.forEach { selectedCard in
-//            if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
-//                if !deck.isEmpty {
-//                    cardsInPlay[cardIndex] = deck.removeFirst()
-//                } else {
-//                    cardsInPlay.remove(at: cardIndex)
-//                }
-//            }
-//        }
-//        selectedCards.removeAll()
-//    }
-//    
-//    private func deal3MoreCards() {
-//        
-//    }
-//    
-//    init(cardContentFactory: (Int, CardShape, CardShading, CardColor) -> CardContent) {
-//        // create the deck
-//        deck = []
-//        for number in 1...3 {
-//            for shape in CardShape.allCases {
-//                for shading in CardShading.allCases {
-//                    for color in CardColor.allCases {
-//                        let content = cardContentFactory(number, shape, shading, color)
-//                        deck.append(Card(content: content, id: deck.count))
-//                    }
-//                }
-//            }
-//        }
-//        deck.shuffle()
-//
-//        //deal initial 12 cards
-//        for index in 0..<12 {
-//            cardsInPlay.append(deck.remove(at: index))
-//        }
-//    }
-//}

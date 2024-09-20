@@ -5,7 +5,7 @@
 //  Created by Vanya Mutafchieva on 13/09/2024.
 //
 
-import SwiftUI
+import Foundation
 
 struct CardContent: Identifiable, Hashable, CustomStringConvertible {
     let numOfShapes: Int
