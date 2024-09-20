@@ -16,13 +16,13 @@ struct SetGame {
     /// The Array of cards currently in play (displayed on screen)
     private(set) var cardsInPlay = [Card]()
     
-    //private var a3CardSet: Bool { selectedCards.count == 3 }
-    private var selectionIsAMatchedSet: Matched {
+    /// Indicates the Matched state of the selected cards - a matching trio, a non-matching trio or not matched yet (fewer than 3 cards)
+    private var isAMatchingTrio: Matched {
         if selectedCards.count == 3 {
-            return aMatch() ? .yes : .no
+            return aMatch() ? .yes : .no // match or mismatch
         }
-        else  { // if selectedCards.count < 3
-            return .notyet
+        else  {
+            return .notyet // less than 3 cards
         }
     }
     
@@ -32,13 +32,13 @@ struct SetGame {
         if card.isMatched == .yes { return }
         
         // if already 3 cards selected
-        if selectionIsAMatchedSet == .yes { // match
+        if isAMatchingTrio == .yes { // match
             replaceSet()
-        } else if selectionIsAMatchedSet == .no { // mismatch
+        } else if isAMatchingTrio == .no { // mismatch
             deselectSelection()
         }
         // if less than 3 cards selected
-        if selectionIsAMatchedSet == .notyet {
+        if isAMatchingTrio == .notyet {
             selectDeselect(card)
             checkIfReadyToBeMatched()
         }
@@ -70,11 +70,6 @@ struct SetGame {
     private mutating func updateMatchedOrMismatchedStatus() {
         selectedCards.forEach { selectedCard in
             if let cardIndex = cardsInPlay.firstIndex(where: { $0.id == selectedCard.id } ) {
-//                if isAMatchedSet() { // (cards are a match)
-//                    cardsInPlay[cardIndex].isMatched = .yes
-//                } else { // cards are a mismatch
-//                    cardsInPlay[cardIndex].isMatched = .no
-//                }
                 cardsInPlay[cardIndex].isMatched = aMatch() ? .yes : .no
             }
         }
@@ -104,8 +99,12 @@ struct SetGame {
         selectedCards.removeAll()
     }
     
-    private func deal3MoreCards() {
-        
+    mutating func deal3MoreCards() {
+        if isAMatchingTrio == .yes { // match
+            replaceSet()
+        } else {
+            dealCards(3)
+        }
     }
     
     init(cardContentFactory: (Int, CardShape, CardShading, CardColor) -> CardContent) {
@@ -124,8 +123,14 @@ struct SetGame {
         deck.shuffle()
 
         //deal initial 12 cards
-        for index in 0..<12 {
-            cardsInPlay.append(deck.remove(at: index))
+        dealCards(12)
+    }
+    
+    private mutating func dealCards(_ numOfCards: Int) {
+        if deck.count >= numOfCards {
+            for _ in 0..<numOfCards {
+                cardsInPlay.append(deck.removeFirst())
+            }
         }
     }
     

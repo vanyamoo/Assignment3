@@ -9,7 +9,7 @@ import SwiftUI
 
 @Observable class StandardSetGame {
     
-    var cards: [Card] {
+    var cardsInPlay: [Card] {
         setGame.cardsInPlay
     }
     
@@ -23,11 +23,11 @@ import SwiftUI
     
 // MARK: - Intents
     
-    private func deal3MoreCards() {
-        
+    func deal3MoreCards() {
+        setGame.deal3MoreCards()
     }
     
-    private func newGame() {
+    func newGame() {
         
     }
     
